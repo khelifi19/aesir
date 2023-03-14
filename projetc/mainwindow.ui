@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>958</width>
-    <height>636</height>
+    <width>1059</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1188,10 +1188,10 @@ QStatusBar
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>60</x>
       <y>10</y>
-      <width>831</width>
-      <height>571</height>
+      <width>801</width>
+      <height>561</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -1526,7 +1526,7 @@ QStatusBar
        <rect>
         <x>70</x>
         <y>330</y>
-        <width>631</width>
+        <width>681</width>
         <height>171</height>
        </rect>
       </property>
@@ -1582,6 +1582,55 @@ QStatusBar
         <string>Tri CIN</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>220</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>30</y>
+        <width>191</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Recherche</string>
+      </property>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>60</y>
+         <width>151</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>220</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>STAT</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab">
@@ -1678,8 +1727,8 @@ QStatusBar
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>958</width>
-     <height>26</height>
+     <width>1059</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

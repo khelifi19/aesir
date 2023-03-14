@@ -4,6 +4,38 @@
 #include <QMessageBox>
 #include<QIntValidator>
 
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QtCharts>
+#include<QSystemTrayIcon>
+#include <QRegExp>
+#include "connection.h"
+#include <QFileDialog>
+#include <QPainter>
+#include <QDate>
+#include <QPdfWriter>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QPixmap>
+#include <QApplication>
+#include <QIntValidator>
+#include <QSqlQuery>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
+#include <QtDebug>
+#include <QPdfWriter>
+#include <QPainter>
+#include <QPixmap>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QApplication>
+#include <QtPrintSupport/QPrinter>
+#include <QTextDocument>
+#include <QtCore>
+
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -141,3 +173,122 @@ void MainWindow::on_tri_cin_clicked()
 {
     ui->tab_tri->setModel(E.trie_cin());
 }
+
+//recherche
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    QSqlQueryModel *model= new QSqlQueryModel();
+    QSqlQuery   *query= new QSqlQuery();
+    query->prepare("SELECT * FROM employee WHERE id  LIKE'"+arg1+"%' or nom  LIKE'"+arg1+"%' or sexe LIKE'"+arg1+"%'");
+     query->exec();
+     if (query->next()) {
+     model->setQuery(*query);
+     ui->tab_tri->setModel(model);
+     }
+     else {
+         QMessageBox::critical(nullptr, QObject::tr("SEARCH"),
+                         QObject::tr("NO MATCH FOUND !!\n"
+                                     "Click Cancel to exit."), QMessageBox::Cancel);
+      ui->lineEdit->clear();}
+}
+
+//pdf
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                "/home",
+                                                QFileDialog::ShowDirsOnly
+                                                | QFileDialog::DontResolveSymlinks);
+    qDebug()<<dir;
+    QPdfWriter pdf(dir+"/PdfList.pdf");
+                           QPainter painter(&pdf);
+                          int i = 4000;
+
+                                painter.drawPixmap(QRect(100,100,2500,2500),QPixmap("C:/logo.jpg"));
+                               // painter.drawText(900,650,"Smart Charging Station");
+                               painter.setPen(Qt::blue);
+                               painter.setFont(QFont("Time New Roman", 25));
+                               painter.drawText(3000,1400,"Liste des employees");
+                               painter.setPen(Qt::black);
+                               painter.setFont(QFont("Time New Roman", 15));
+                               painter.drawRect(100,100,9400,2500); // dimension mtaa3 rectangle li fih liste
+                               painter.drawRect(100,3000,9400,500);
+                               painter.setFont(QFont("Time New Roman", 9));
+                               painter.drawText(300,3300,"ID");
+                               painter.drawText(2000,3300,"Nom");
+                               painter.drawText(4000,3300,"Cin");
+                               painter.drawText(5600,3300,"Sexe");
+
+                               painter.drawRect(100,3000,9400,10700);
+                               //QTextDocument previewDoc;
+                               QString pdflist = QDate::currentDate().toString("'data_'MM_dd_yyyy'.txt'");
+                               //QTextCursor cursor(&previewDoc);
+                               QSqlQuery query;
+                               query.prepare("select * from employee");
+                               query.exec();
+                               while (query.next())
+                               {
+                                   painter.drawText(300,i,query.value(0).toString());
+                                   painter.drawText(2000,i,query.value(1).toString());
+                                   painter.drawText(4000,i,query.value(2).toString());
+                                   painter.drawText(5600,i,query.value(3).toString());
+                                   painter.drawText(7000,i,query.value(4).toString());
+                                   painter.drawText(8000,i,query.value(5).toString());
+                                  i = i +500;
+                               }
+                               int reponse = QMessageBox::question(this, "Générer PDF", "<PDF Enregistré>...Vous Voulez Affichez Le PDF ?",
+                                                                   QMessageBox::Yes|QMessageBox::No);
+                                   if (reponse == QMessageBox::Yes)
+                                   {
+                                       QDesktopServices::openUrl(QUrl::fromLocalFile(dir+"/PdfList.pdf"));
+
+                                       painter.end();
+                                   }
+                                   else
+                                   {
+                                        painter.end();
+                                   }
+}
+
+// stat
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+                                    model->setQuery("select * from employee where SEXE = 'Homme' ");
+                                    float e=model->rowCount();
+                                    model->setQuery("select * from employee where SEXE = 'Femme' ");
+                                    float ee=model->rowCount();
+                                    float total=e+ee;
+                                    QString a=QString("Homme"+QString::number((e*100)/total,'f',2)+"%" );
+                                    QString b=QString("Femme"+QString::number((ee*100)/total,'f',2)+"%" );
+                                    QPieSeries *series = new QPieSeries();
+                                    series->append(a,e);
+                                    series->append(b,ee);
+                            if (e!=0)
+                            {QPieSlice *slice = series->slices().at(0);
+                             slice->setLabelVisible();
+                             slice->setPen(QPen());}
+                            if ( ee!=0)
+                            {
+                                     // Add label, explode and define brush for 2nd slice
+                                     QPieSlice *slice1 = series->slices().at(1);
+                                     //slice1->setExploded();
+                                     slice1->setLabelVisible();
+                            }
+                                    // Create the chart widget
+                                    QChart *chart = new QChart();
+                                    // Add data to chart with title and hide legend
+                                    chart->addSeries(series);
+                                    chart->setTitle("Pourcentage des homme et femme : nombre total : "+ QString::number(total));
+                                    chart->legend()->hide();
+                                    // Used to display the chart
+                                    QChartView *chartView = new QChartView(chart);
+                                    chartView->setRenderHint(QPainter::Antialiasing);
+                                    chartView->resize(1000,500);
+                                    chartView->show();
+}
+
+

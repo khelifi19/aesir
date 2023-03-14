@@ -1,4 +1,15 @@
 QT       += core gui sql
+QT       += charts\
+
+
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += widgets charts
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+CONFIG += c++11
+TARGET = smtp
+QT += core gui network
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

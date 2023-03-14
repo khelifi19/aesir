@@ -5,6 +5,13 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include<QSqlQueryModel>
+#include <QtQuick>
+#include <QtPositioning>
+#include <QGeoServiceProvider>
+#include <QGeoCoordinate>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QList>
 class station
 {
     int id_station,nb_employe,nb_borne;
@@ -33,6 +40,7 @@ public:
     QSqlQueryModel * trie_id();
     QSqlQueryModel * trie_nom();
     QSqlQueryModel * trie_nbemp();
+
 
 
 

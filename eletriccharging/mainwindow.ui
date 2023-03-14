@@ -1189,7 +1189,7 @@ QStatusBar
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>30</y>
       <width>791</width>
       <height>491</height>
      </rect>
@@ -1318,16 +1318,6 @@ QStatusBar
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="le_loca">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>190</y>
-         <width>113</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pb_ajouter">
        <property name="geometry">
         <rect>
@@ -1340,6 +1330,36 @@ QStatusBar
        <property name="text">
         <string>ajouter</string>
        </property>
+      </widget>
+      <widget class="QComboBox" name="le_loca_2">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>190</y>
+         <width>111</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Tunis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gafsa</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gabes</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Sfax</string>
+        </property>
+       </item>
       </widget>
      </widget>
      <widget class="QTableView" name="tab_stat">
@@ -1518,16 +1538,6 @@ QStatusBar
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="le_loca_modif">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>190</y>
-         <width>113</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pb_modifier">
        <property name="geometry">
         <rect>
@@ -1540,6 +1550,26 @@ QStatusBar
        <property name="text">
         <string>modifier</string>
        </property>
+      </widget>
+      <widget class="QComboBox" name="le_loca_3">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>200</y>
+         <width>111</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Tunis</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Sfax</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </widget>
@@ -1608,6 +1638,81 @@ QStatusBar
         <string>tri par nombre d'employé</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>150</y>
+        <width>231</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>recherche</string>
+      </property>
+      <widget class="QLineEdit" name="le_recherhe">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>161</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="le_pdf">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>30</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="le_stat">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>30</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>STAT</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="le_map">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>100</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>MINI MAP</string>
+      </property>
      </widget>
     </widget>
    </widget>

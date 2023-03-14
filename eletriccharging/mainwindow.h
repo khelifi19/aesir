@@ -30,6 +30,15 @@ private slots:
 
     void on_tab_stat_activated(const QModelIndex &index);
 
+    void on_le_recherhe_textChanged(const QString &arg1);
+
+    void on_le_pdf_clicked();
+
+    void on_le_stat_clicked();
+
+    void on_le_map_clicked();
+
+
 private:
     Ui::MainWindow *ui;
     station s;

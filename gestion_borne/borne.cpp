@@ -2,6 +2,7 @@
 #include <QSqlQuery>
 #include <QtDebug>
 #include <QObject>
+#include <QDate>
 Borne::Borne()
 {
 id=0;
@@ -9,7 +10,7 @@ statut="";
 type_prise="";
 voltage=0;
 montant=0;
-heure_debut=0;
+heure_debut = 0;
 duree=0;
 }
 Borne::Borne(int id , QString statut , QString type_prise , int voltage , int montant , int heure_debut , int duree)
@@ -133,6 +134,94 @@ bool Borne :: modifier(int id ,QString statut,QString type_prise , int voltage,i
 
     return  qry.exec();
 }
+QSqlQueryModel * Borne::tri_voltage()
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM BORNE order by voltage");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("statut"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("type prise"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("voltage"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("heure bebut"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("duree"));
+    return model;
+}
+QSqlQueryModel * Borne::tri_type()
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM BORNE order by type_prise");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Id"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("statut"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("type prise"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("voltage"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("montant"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("heure bebut"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("duree"));
+    return model;
+}
+bool Borne::ajouter_historique(QString ACTION,int ID_BORNE,QString STATUT_BORNE)
+{
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO HISTORIQUE (ACTION, ID_BORNE, STATUT_BORNE, DATE_H) "
+                  "VALUES (:ACTION, :ID_BORNE, :STATUT_BORNE , :DATE_H)");
+    query.bindValue(":ACTION", ACTION);
+    query.bindValue(":ID_BORNE",ID_BORNE );
+        query.bindValue(":STATUT_BORNE", STATUT_BORNE);
+        query.bindValue(":DATE_H", QDate::currentDate());
 
 
+    return    query.exec();
+}
+QSqlQueryModel * Borne::afficher_historique0()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+
+        model->setQuery("select * FROM HISTORIQUE");
+        model->setHeaderData(0, Qt::Horizontal, QObject::tr("ACTION"));
+        model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID_BORNE"));
+        model->setHeaderData(2, Qt::Horizontal, QObject::tr("STATUT_BORNE"));
+        model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_H"));
+
+
+
+    return model;
+    }
+
+
+QSqlQueryModel * Borne::afficher_historique(QString type)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+     QString a=type;
+     if(a=="tout")
+     {        model->setQuery("select * FROM HISTORIQUE");
+         model->setHeaderData(0, Qt::Horizontal, QObject::tr("ACTION"));
+         model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID_BORNE"));
+         model->setHeaderData(2, Qt::Horizontal, QObject::tr("STATUT_BORNE"));
+         model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_H"));
+
+         }
+     else{
+        model->setQuery("select * FROM HISTORIQUE  WHERE ACTION LIKE '%"+a+"%'  ");
+        model->setHeaderData(0, Qt::Horizontal, QObject::tr("ACTION"));
+        model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID_BORNE"));
+        model->setHeaderData(2, Qt::Horizontal, QObject::tr("STATUT_BORNE"));
+        model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATE_H"));
+
+
+
+}
+    return model;
+}
+bool Borne::supprimerh(int ID_BORNE)
+{
+
+    QSqlQuery query;
+
+         query.prepare("DELETE from HISTORIQUE where ID_BORNE=:ID_BORNE ");
+         query.bindValue(":ID_BORNE", ID_BORNE);
+     return     query.exec();
+
+}
 
